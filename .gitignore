@@ -1,1 +1,7 @@
 SWEGroupProject/.vs
+*.sln
+*.vcxproj
+*.filters
+*.users
+*.vcxproj.filters
+*.vcxproj.users
