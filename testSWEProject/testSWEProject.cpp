@@ -10,7 +10,7 @@ int main()
 
     sf::RectangleShape background(sf::Vector2f(1600, 1000));
     sf::Texture fishtankBackground;
-    fishtankBackground.loadFromFile("fishtank.jpg");
+    fishtankBackground.loadFromFile("../testSWEProject/fishtank.jpg");
     background.setTexture(&fishtankBackground);
 
 
