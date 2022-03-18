@@ -1,13 +1,13 @@
-cmake_minimum_required(VERSION 3.21)
+cmake_minimum_required(VERSION 3.20)
 project(SWEProject)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_executable(SWEProject testSWEProject/testSWEProject.cpp)
+add_executable(SWEProject testSWEProject/testSWEProject.cpp testSWEProject/Screen.cpp testSWEProject/Screen.h)
 
 set(SFML_STATIC_LIBRARIES TRUE)
-set(SFML_DIR C:/SFML/lib/cmake/SFML)
+set(SFML_DIR SFML-2.5.1/lib/cmake/SFML)
 find_package(SFML COMPONENTS system window graphics audio network REQUIRED)
 
-include_directories(c:/SFML/include)
+include_directories(SFML-2.5.1/include)
 target_link_libraries(SWEProject sfml-system sfml-window sfml-graphics sfml-audio)
