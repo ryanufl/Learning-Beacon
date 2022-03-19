@@ -13,8 +13,16 @@ struct Screen
     map<string, sf::RectangleShape> thingsToDraw;
     Screen();
     Screen(bool a);
+    ~Screen();
     void showScreen(sf::RenderWindow &w);
+    void setText(string text_to_output, string where_to_display);
 
+private:
+    // use for setText function
+    vector<sf::Text*> text;
+    sf::Font* _font = new sf::Font;
+
+    //
 };
 
 

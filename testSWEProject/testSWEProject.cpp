@@ -35,7 +35,29 @@ int main()
     screens.push_back(&startMenu);                                        //
     startMenu.thingsToDraw.emplace("background", background);             //adds all buttons/images used for startMenu ========WILL NEED TO CHANGE WHEN USING SPRITES========
     startMenu.thingsToDraw.emplace("play", playButton);                   //
+    startMenu.setText("play", "play");
     startMenu.thingsToDraw.emplace("exit", exitButton);                   //
+    startMenu.setText("exit", "exit");
+
+    /*
+     * play menu
+     * display when play button clicked.
+     */
+    Screen playMenu(false);
+    screens.push_back(&playMenu);
+    playMenu.thingsToDraw.emplace("background", background); //set background as background.jpg.
+    playMenu.thingsToDraw.find("background")->second.setFillColor(sf::Color(40,40,40)); //change color to darker.
+    playMenu.thingsToDraw.emplace("MathGame_Button", sf::RectangleShape(sf::Vector2f(400, 150))); //button MathGame_Button.
+    playMenu.thingsToDraw.emplace("GrammarGame_Button", sf::RectangleShape(sf::Vector2f(400, 150))); //button GrammarGame_Button.
+    playMenu.thingsToDraw.emplace("TypingGame_Button", sf::RectangleShape(sf::Vector2f(400, 150))); //button TypingGame_Button.
+    playMenu.thingsToDraw.find("MathGame_Button")->second.setPosition(100, 400); //set MathGame_Button position.
+    playMenu.thingsToDraw.find("GrammarGame_Button")->second.setPosition(600, 400); //set GrammarGame_Button position.
+    playMenu.thingsToDraw.find("TypingGame_Button")->second.setPosition(1100, 400); //set TypingGame_Button position.
+    playMenu.setText("Math Game", "MathGame_Button");       //
+    playMenu.setText("Grammar Game", "GrammarGame_Button"); //display text
+    playMenu.setText("Typing Game", "TypingGame_Button");   //
+
+
 
     Screen mathGame(false);                                                                     //
     screens.push_back(&mathGame);                                                               //
@@ -57,6 +79,8 @@ int main()
                     if (startMenu.thingsToDraw.find("play")->second.getGlobalBounds().contains(event.mouseButton.x, event.mouseButton.y) && startMenu.needToDraw) {//tests bounds of button and if the screen is currently visable
                         //playButton.setFillColor(sf::Color::Yellow); //setting color can be helpful for confirming an input happened
                         startMenu.thingsToDraw.find("play")->second.setFillColor(sf::Color::Yellow);
+                        playMenu.needToDraw = true;
+                        startMenu.needToDraw = false;
                     }else if(startMenu.thingsToDraw.find("exit")->second.getGlobalBounds().contains(event.mouseButton.x, event.mouseButton.y) && startMenu.needToDraw) {//tests bounds of button and if the screen is currently visable
                         startMenu.needToDraw = false;
                         mathGame.needToDraw = true;
@@ -64,6 +88,14 @@ int main()
                     else if (mathGame.thingsToDraw.find("backButton")->second.getGlobalBounds().contains(event.mouseButton.x, event.mouseButton.y) && mathGame.needToDraw) {//tests bounds of button and if the screen is currently visable
                         startMenu.needToDraw = true;
                         mathGame.needToDraw = false;
+                    }else if(playMenu.needToDraw){
+                        //only if on play menu screen, change colors to yellow for button clicking.
+                        if(playMenu.thingsToDraw.find("MathGame_Button")->second.getGlobalBounds().contains(event.mouseButton.x, event.mouseButton.y))
+                            playMenu.thingsToDraw.find("MathGame_Button")->second.setFillColor(sf::Color::Yellow);
+                        else if(playMenu.thingsToDraw.find("GrammarGame_Button")->second.getGlobalBounds().contains(event.mouseButton.x, event.mouseButton.y))
+                            playMenu.thingsToDraw.find("GrammarGame_Button")->second.setFillColor(sf::Color::Yellow);
+                        else if(playMenu.thingsToDraw.find("TypingGame_Button")->second.getGlobalBounds().contains(event.mouseButton.x, event.mouseButton.y))
+                            playMenu.thingsToDraw.find("TypingGame_Button")->second.setFillColor(sf::Color::Yellow);
                     }
                 }
             }
