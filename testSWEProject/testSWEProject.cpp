@@ -13,19 +13,19 @@ int main()
 
     sf::RectangleShape background(sf::Vector2f(1600, 1000)); //adds background
     sf::Texture fishtankBackground;                          //
-    fishtankBackground.loadFromFile("fishtank.jpg");         //sets up background 
+    fishtankBackground.loadFromFile("../testSWEProject/fishtank.jpg");         //sets up background
     background.setTexture(&fishtankBackground);              //
 
 
     sf::RectangleShape playButton(sf::Vector2f(400, 150));   //
     sf::RectangleShape exitButton(sf::Vector2f(400, 150));   //
-                                                             //
+    //
     playButton.setPosition(600,300);                         //
     exitButton.setPosition(600,500);                         //creates two main menu buttons
-                                                             //moves them
+    //moves them
     playButton.setOutlineColor(sf::Color::Black);            //
     playButton.setOutlineThickness(5);                       //
-                                                             //
+    //
     exitButton.setOutlineColor(sf::Color::Black);            //
     exitButton.setOutlineThickness(5);                       //
 

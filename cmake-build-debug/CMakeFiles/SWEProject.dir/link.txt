@@ -1,0 +1,3 @@
+"C:\software\CLion 2021.1.1\bin\cmake\win\bin\cmake.exe" -E rm -f CMakeFiles\SWEProject.dir/objects.a
+C:\Users\38658\mingw64\bin\ar.exe cr CMakeFiles\SWEProject.dir/objects.a @CMakeFiles\SWEProject.dir\objects1.rsp
+C:\Users\38658\mingw64\bin\g++.exe -g -Wl,--whole-archive CMakeFiles\SWEProject.dir/objects.a -Wl,--no-whole-archive -o SWEProject.exe -Wl,--out-implib,libSWEProject.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\SWEProject.dir\linklibs.rsp
