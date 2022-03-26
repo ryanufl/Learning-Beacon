@@ -35,7 +35,7 @@ void Screen::setText(string text_to_output, string where_to_display) {
     sf::FloatRect textRect = _text->getLocalBounds();
     sf::FloatRect RectangleShapeRect = thingsToDraw[where_to_display].getLocalBounds();
     _text->setPosition(thingsToDraw[where_to_display].getPosition().x + (RectangleShapeRect.width / 2 - textRect.width / 2),
-                       thingsToDraw[where_to_display].getPosition().y + (RectangleShapeRect.height / 2 - textRect.height));
+                       thingsToDraw[where_to_display].getPosition().y + (RectangleShapeRect.height / 2 - 25));
     text.emplace_back(_text);
 }
 
