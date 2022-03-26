@@ -5,6 +5,7 @@
 
 
 testSWEProject/testSWEProject.vcxproj
+SFML-2.5.1/
 
 # User-specific files
 *.rsuser
@@ -341,3 +342,6 @@ ASALocalRun/
 
 # BeatPulse healthcheck temp database
 healthchecksdb
+
+cmake-build-debug/
+cmake_modules/
