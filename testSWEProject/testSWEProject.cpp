@@ -12,22 +12,32 @@ int main()
 
 
     sf::RectangleShape background(sf::Vector2f(1600, 1000)); //adds background
-    sf::Texture fishtankBackground;                          //
+    sf::Texture fishtankBackground;
     fishtankBackground.loadFromFile("../testSWEProject/fishtank.jpg");         //sets up background
     background.setTexture(&fishtankBackground);              //
+
+    sf::RectangleShape grammarBackground(sf::Vector2f(1600, 1000));
+    sf::Texture grammarBackgroundTex;
+    grammarBackgroundTex.loadFromFile("../testSWEProject/grammarBackground.jpg");
+    grammarBackground.setTexture(&grammarBackgroundTex);
 
 
     sf::RectangleShape playButton(sf::Vector2f(400, 150));   //
     sf::RectangleShape exitButton(sf::Vector2f(400, 150));   //
+    sf::RectangleShape playGrammarButton(sf::Vector2f(400, 150));
     //
     playButton.setPosition(600,300);                         //
     exitButton.setPosition(600,500);                         //creates two main menu buttons
+    playGrammarButton.setPosition(600, 700);
     //moves them
     playButton.setOutlineColor(sf::Color::Black);            //
     playButton.setOutlineThickness(5);                       //
     //
     exitButton.setOutlineColor(sf::Color::Black);            //
     exitButton.setOutlineThickness(5);                       //
+
+    playGrammarButton.setOutlineColor(sf::Color::Black);
+    playGrammarButton.setOutlineThickness(5);
 
     vector<Screen*> screens;                                               //used to correctly print one screen at a time
 
@@ -36,6 +46,7 @@ int main()
     startMenu.thingsToDraw.emplace("background", background);             //adds all buttons/images used for startMenu ========WILL NEED TO CHANGE WHEN USING SPRITES========
     startMenu.thingsToDraw.emplace("play", playButton);                   //
     startMenu.thingsToDraw.emplace("exit", exitButton);                   //
+    startMenu.thingsToDraw.emplace("playGrammar", playGrammarButton);
 
     Screen mathGame(false);                                                                     //
     screens.push_back(&mathGame);                                                               //
@@ -44,6 +55,9 @@ int main()
     mathGame.thingsToDraw.emplace("backButton", sf::RectangleShape(sf::Vector2f(500, 500)));    //
     mathGame.thingsToDraw.find("backButton")->second.setPosition(400, 400);                     //
 
+    Screen grammarGame(false);
+    screens.push_back(&grammarGame);
+    grammarGame.thingsToDraw.emplace("background", grammarBackground);
 
     while (window.isOpen())
     {
@@ -60,10 +74,16 @@ int main()
                     }else if(startMenu.thingsToDraw.find("exit")->second.getGlobalBounds().contains(event.mouseButton.x, event.mouseButton.y) && startMenu.needToDraw) {//tests bounds of button and if the screen is currently visable
                         startMenu.needToDraw = false;
                         mathGame.needToDraw = true;
+                        grammarGame.needToDraw = false;
                     }
                     else if (mathGame.thingsToDraw.find("backButton")->second.getGlobalBounds().contains(event.mouseButton.x, event.mouseButton.y) && mathGame.needToDraw) {//tests bounds of button and if the screen is currently visable
                         startMenu.needToDraw = true;
                         mathGame.needToDraw = false;
+                        grammarGame.needToDraw = false;
+                    } else if(startMenu.thingsToDraw.find("playGrammar")->second.getGlobalBounds().contains(event.mouseButton.x, event.mouseButton.y) && startMenu.needToDraw) {
+                        startMenu.needToDraw = false;
+                        mathGame.needToDraw = false;
+                        grammarGame.needToDraw = true;
                     }
                 }
             }

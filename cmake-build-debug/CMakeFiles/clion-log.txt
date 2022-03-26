@@ -1,5 +1,5 @@
-"C:\software\CLion 2021.1.1\bin\cmake\win\bin\cmake.exe" -DCMAKE_BUILD_TYPE=Debug -DCMAKE_DEPENDS_USE_COMPILER=FALSE -G "CodeBlocks - MinGW Makefiles" C:\Users\38658\CLionProjects\SWEProject
--- Found SFML 2.5.1 in C:/Users/38658/CLionProjects/SWEProject/SFML-2.5.1/lib/cmake/SFML
+"C:\Program Files\JetBrains\CLion 2021.3.3\bin\cmake\win\bin\cmake.exe" -DCMAKE_BUILD_TYPE=Debug "-DCMAKE_MAKE_PROGRAM=C:/Program Files/JetBrains/CLion 2021.3.3/bin/ninja/win/ninja.exe" -G Ninja C:\Users\Gabri\CLionProjects\SWEProject
+-- Found SFML 2.5.1 in C:/Users/Gabri/CLionProjects/SWEProject/SFML-2.5.1/lib/cmake/SFML
 -- Configuring done
 -- Generating done
--- Build files have been written to: C:/Users/38658/CLionProjects/SWEProject/cmake-build-debug
+-- Build files have been written to: C:/Users/Gabri/CLionProjects/SWEProject/cmake-build-debug

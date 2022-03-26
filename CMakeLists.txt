@@ -3,7 +3,7 @@ project(SWEProject)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_executable(SWEProject testSWEProject/testSWEProject.cpp testSWEProject/Screen.cpp testSWEProject/Screen.h)
+add_executable(SWEProject testSWEProject/testSWEProject.cpp testSWEProject/Screen.cpp testSWEProject/Screen.h testSWEProject/grammarGame.cpp testSWEProject/grammarGame.h)
 
 set(SFML_STATIC_LIBRARIES TRUE)
 set(SFML_DIR SFML-2.5.1/lib/cmake/SFML)
