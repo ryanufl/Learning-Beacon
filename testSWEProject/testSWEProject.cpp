@@ -62,13 +62,12 @@ int main()
 
 
 
-    Screen mathGame(false);                                                                     //
-    screens.push_back(&mathGame);                                                               //
-    sf::Texture mathBackground;                          //
+    Screen mathGame(false);                             
+    screens.push_back(&mathGame);                       
+    sf::Texture mathBackground;                         
     mathBackground.loadFromFile("mathbackground.jpg");
     background.setTexture(&mathBackground);
     mathGame.thingsToDraw.emplace("background", background);                                    //math background
-    //mathGame.thingsToDraw.find("background")->second.setFillColor(sf::Color(40, 40, 40));       // where math game UI will be
     mathGame.thingsToDraw.emplace("backButton", sf::RectangleShape(sf::Vector2f(400, 100)));    // 
     mathGame.thingsToDraw.emplace("mathDisplay", sf::RectangleShape(sf::Vector2f(400, 200)));
     mathGame.thingsToDraw.emplace("choiceOneMath", sf::RectangleShape(sf::Vector2f(400, 75)));
@@ -91,39 +90,45 @@ int main()
                 window.close();
             if (event.type == sf::Event::MouseButtonPressed) {
                 if (event.mouseButton.button == sf::Mouse::Left) {
-                    if (startMenu.thingsToDraw.find("playButton")->second.getGlobalBounds().contains(event.mouseButton.x, event.mouseButton.y) && startMenu.needToDraw) {//tests bounds of button and if the screen is currently visable
-                        startMenu.thingsToDraw.find("playButton")->second.setFillColor(sf::Color::Yellow);
-                        playMenu.needToDraw = true;
-                        startMenu.needToDraw = false;
-                    }else if(startMenu.thingsToDraw.find("exitButton")->second.getGlobalBounds().contains(event.mouseButton.x, event.mouseButton.y) && startMenu.needToDraw) {//tests bounds of button and if the screen is currently visable
-                        startMenu.needToDraw = false;
-                        mathGame.needToDraw = true;
+                    if (startMenu.needToDraw) {
+                        if (startMenu.thingsToDraw.find("playButton")->second.getGlobalBounds().contains(event.mouseButton.x, event.mouseButton.y)) {//tests bounds of button and if the screen is currently visable
+                            startMenu.thingsToDraw.find("playButton")->second.setFillColor(sf::Color::Yellow);
+                            playMenu.needToDraw = true;
+                            startMenu.needToDraw = false;
+                        }
+                        else if (startMenu.thingsToDraw.find("exitButton")->second.getGlobalBounds().contains(event.mouseButton.x, event.mouseButton.y)) {//tests bounds of button and if the screen is currently visable
+                            window.close();
+                        }
+                        else if (startMenu.thingsToDraw.find("exitButton")->second.getGlobalBounds().contains(event.mouseButton.x, event.mouseButton.y)) {//tests bounds of button and if the screen is currently visable
+                            startMenu.needToDraw = false;
+                            mathGame.needToDraw = true;
+                        }
                     }
-                    else if(startMenu.thingsToDraw.find("exitButton")->second.getGlobalBounds().contains(event.mouseButton.x, event.mouseButton.y) && startMenu.needToDraw) {//tests bounds of button and if the screen is currently visable
-                        startMenu.needToDraw = false;
-                        mathGame.needToDraw = true;               
-                    }
-                    else if (mathGame.thingsToDraw.find("choiceOneMath")->second.getGlobalBounds().contains(event.mouseButton.x, event.mouseButton.y) && mathGame.needToDraw) { // click on first choice
-                        mathGame.thingsToDraw.find("choiceOneMath")->second.setFillColor(sf::Color::Blue); 
-                    }
-                    else if (mathGame.thingsToDraw.find("choiceTwoMath")->second.getGlobalBounds().contains(event.mouseButton.x, event.mouseButton.y) && mathGame.needToDraw) { //click on second choice
-                        mathGame.thingsToDraw.find("choiceTwoMath")->second.setFillColor(sf::Color::Magenta);
-                    }
-                    else if (mathGame.thingsToDraw.find("nextMath")->second.getGlobalBounds().contains(event.mouseButton.x, event.mouseButton.y) && mathGame.needToDraw) { // click to next game
-                        mathGame.thingsToDraw.find("nextMath")->second.setFillColor(sf::Color::Green);
-                    }
-                    else if (mathGame.thingsToDraw.find("backButton")->second.getGlobalBounds().contains(event.mouseButton.x, event.mouseButton.y) && mathGame.needToDraw) {//tests bounds of button and if the screen is currently visable
-                        startMenu.needToDraw = true;
-                        mathGame.needToDraw = false;
-                    }else if(playMenu.needToDraw){
+                    else if(playMenu.needToDraw){
                         //only if on play menu screen, change colors to yellow for button clicking.
-                        if(playMenu.thingsToDraw.find("MathGame_Button")->second.getGlobalBounds().contains(event.mouseButton.x, event.mouseButton.y))
-                            playMenu.thingsToDraw.find("MathGame_Button")->second.setFillColor(sf::Color::Yellow);
+                        if (playMenu.thingsToDraw.find("MathGame_Button")->second.getGlobalBounds().contains(event.mouseButton.x, event.mouseButton.y)) {
+                            playMenu.needToDraw = false;
+                            mathGame.needToDraw = true;
+                        }
                         else if(playMenu.thingsToDraw.find("GrammarGame_Button")->second.getGlobalBounds().contains(event.mouseButton.x, event.mouseButton.y))
                             playMenu.thingsToDraw.find("GrammarGame_Button")->second.setFillColor(sf::Color::Yellow);
                         else if(playMenu.thingsToDraw.find("TypingGame_Button")->second.getGlobalBounds().contains(event.mouseButton.x, event.mouseButton.y))
                             playMenu.thingsToDraw.find("TypingGame_Button")->second.setFillColor(sf::Color::Yellow);
-
+                    }
+                    else if (mathGame.needToDraw) {
+                        if (mathGame.thingsToDraw.find("choiceOneMath")->second.getGlobalBounds().contains(event.mouseButton.x, event.mouseButton.y)) { // click on first choice
+                            mathGame.thingsToDraw.find("choiceOneMath")->second.setFillColor(sf::Color::Blue);
+                        }
+                        else if (mathGame.thingsToDraw.find("choiceTwoMath")->second.getGlobalBounds().contains(event.mouseButton.x, event.mouseButton.y)) { //click on second choice
+                            mathGame.thingsToDraw.find("choiceTwoMath")->second.setFillColor(sf::Color::Magenta);
+                        }
+                        else if (mathGame.thingsToDraw.find("nextMath")->second.getGlobalBounds().contains(event.mouseButton.x, event.mouseButton.y)) { // click to next game
+                            mathGame.thingsToDraw.find("nextMath")->second.setFillColor(sf::Color::Green);
+                        }
+                        else if (mathGame.thingsToDraw.find("backButton")->second.getGlobalBounds().contains(event.mouseButton.x, event.mouseButton.y)) {//tests bounds of button and if the screen is currently visable
+                            startMenu.needToDraw = true;
+                            mathGame.needToDraw = false;
+                        }
                     }
                 }
             }
