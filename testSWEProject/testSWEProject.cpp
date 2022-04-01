@@ -1,3 +1,6 @@
+//#define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
+#define DOCTEST_CONFIG_IMPLEMENT
+#include "doctest.h"
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <vector>
@@ -6,7 +9,7 @@
 
 using namespace std;
 
-int main()
+int main(int argc, char** argv)
 {
     sf::RenderWindow window(sf::VideoMode(1600, 1000), "Learning Beacon", sf::Style::Close); //creates intial window
 
@@ -65,7 +68,7 @@ int main()
     Screen mathGame(false);                             
     screens.push_back(&mathGame);                       
     sf::Texture mathBackground;                         
-    mathBackground.loadFromFile("mathbackground.jpg");
+    mathBackground.loadFromFile("../testSWEProject/mathbackground.jpg");
     background.setTexture(&mathBackground);
     mathGame.thingsToDraw.emplace("background", background);                                    //math background
     mathGame.thingsToDraw.emplace("backButton", sf::RectangleShape(sf::Vector2f(400, 100)));    // 
@@ -144,5 +147,26 @@ int main()
     }
 
 
-    return 0;
+    doctest::Context context;
+    int res = context.run(); // run tests
+    return res;
+}              
+
+
+
+TEST_CASE("Testing Screen Creation and Setting Position") {
+    Screen createScreen;
+    Screen* screen = &createScreen;
+    CHECK(screen != nullptr);
+
+    Screen s;
+    s.thingsToDraw.emplace("testButton", sf::RectangleShape(sf::Vector2f(400, 150)));
+    s.thingsToDraw.find("testButton")->second.setFillColor(sf::Color::Yellow);
+    CHECK(s.thingsToDraw.find("testButton")->second.getFillColor() == sf::Color::Yellow);
+
+
+   sf::RectangleShape exitButton(sf::Vector2f(400, 150));                 
+   exitButton.setPosition(600, 500);                     
+   CHECK(exitButton.getPosition().x == 600);
+   CHECK(exitButton.getPosition().y == 500);
 }
