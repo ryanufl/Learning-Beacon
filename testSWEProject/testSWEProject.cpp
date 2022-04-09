@@ -88,7 +88,23 @@ int main(int argc, char** argv)
 
     Screen grammarGame(false);
     screens.push_back(&grammarGame);
+
+    sf::RectangleShape backButton(sf::Vector2f(400, 100));
+    sf::RectangleShape grammarDisplay(sf::Vector2f(400, 200));
+
+    backButton.setOutlineColor(sf::Color::Black);
+    backButton.setOutlineThickness(5);
+    grammarDisplay.setOutlineColor(sf::Color::Black);
+    grammarDisplay.setOutlineThickness(5);
+
     grammarGame.thingsToDraw.emplace("background", grammarBackground);
+    grammarGame.thingsToDraw.emplace("backButton", backButton);
+    grammarGame.thingsToDraw.emplace("grammarDisplay", grammarDisplay);
+
+    grammarGame.thingsToDraw.find("backButton")->second.setPosition(50, 75);
+    grammarGame.thingsToDraw.find("grammarDisplay")->second.setPosition(800, 75);
+
+    grammarGame.setText("Back", "backButton");
 
 
 
@@ -141,6 +157,12 @@ int main(int argc, char** argv)
                         else if (mathGame.thingsToDraw.find("backButton")->second.getGlobalBounds().contains(event.mouseButton.x, event.mouseButton.y)) {//tests bounds of button and if the screen is currently visable
                             startMenu.needToDraw = true;
                             mathGame.needToDraw = false;
+                        }
+                    }
+                    else if (grammarGame.needToDraw) {
+                        if (grammarGame.thingsToDraw.find("backButton")->second.getGlobalBounds().contains(event.mouseButton.x, event.mouseButton.y)) {
+                            startMenu.needToDraw = true;
+                            grammarGame.needToDraw = false;
                         }
                     }
                 }
