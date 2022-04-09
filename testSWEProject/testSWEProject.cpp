@@ -15,10 +15,14 @@ int main(int argc, char** argv)
 
 
     sf::RectangleShape background(sf::Vector2f(1600, 1000)); //adds background
+    sf::RectangleShape grammarBackground(sf::Vector2f(1600, 1000));
     sf::Texture fishtankBackground;                          //
+    sf::Texture grammarBackgroundTexture;
 
     fishtankBackground.loadFromFile("../testSWEProject/fishtank.jpg");         //sets up background
+    grammarBackgroundTexture.loadFromFile("../testSWEProject/grammarBackground.jpg");
     background.setTexture(&fishtankBackground);              //
+    grammarBackground.setTexture(&grammarBackgroundTexture);
 
 
     sf::RectangleShape playButton(sf::Vector2f(400, 150));   //
@@ -82,6 +86,10 @@ int main(int argc, char** argv)
     mathGame.thingsToDraw.find("choiceTwoMath")->second.setPosition(900, 675); // second option
     mathGame.thingsToDraw.find("nextMath")->second.setPosition(900, 800); // to go to next question
 
+    Screen grammarGame(false);
+    screens.push_back(&grammarGame);
+    grammarGame.thingsToDraw.emplace("background", grammarBackground);
+
 
 
     while (window.isOpen())
@@ -113,8 +121,10 @@ int main(int argc, char** argv)
                             playMenu.needToDraw = false;
                             mathGame.needToDraw = true;
                         }
-                        else if(playMenu.thingsToDraw.find("GrammarGame_Button")->second.getGlobalBounds().contains(event.mouseButton.x, event.mouseButton.y))
-                            playMenu.thingsToDraw.find("GrammarGame_Button")->second.setFillColor(sf::Color::Yellow);
+                        else if(playMenu.thingsToDraw.find("GrammarGame_Button")->second.getGlobalBounds().contains(event.mouseButton.x, event.mouseButton.y)) {
+                            playMenu.needToDraw = false;
+                            grammarGame.needToDraw = true;
+                        }
                         else if(playMenu.thingsToDraw.find("TypingGame_Button")->second.getGlobalBounds().contains(event.mouseButton.x, event.mouseButton.y))
                             playMenu.thingsToDraw.find("TypingGame_Button")->second.setFillColor(sf::Color::Yellow);
                     }
