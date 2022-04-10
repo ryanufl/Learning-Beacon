@@ -15,14 +15,10 @@ int main(int argc, char** argv)
 
 
     sf::RectangleShape background(sf::Vector2f(1600, 1000)); //adds background
-    sf::RectangleShape grammarBackground(sf::Vector2f(1600, 1000));
     sf::Texture fishtankBackground;                          //
-    sf::Texture grammarBackgroundTexture;
 
     fishtankBackground.loadFromFile("../testSWEProject/fishtank.jpg");         //sets up background
-    grammarBackgroundTexture.loadFromFile("../testSWEProject/grammarBackground.jpg");
     background.setTexture(&fishtankBackground);              //
-    grammarBackground.setTexture(&grammarBackgroundTexture);
 
 
     sf::RectangleShape playButton(sf::Vector2f(400, 150));   //
@@ -89,22 +85,54 @@ int main(int argc, char** argv)
     Screen grammarGame(false);
     screens.push_back(&grammarGame);
 
-    sf::RectangleShape backButton(sf::Vector2f(400, 100));
-    sf::RectangleShape grammarDisplay(sf::Vector2f(400, 200));
+    sf::Texture gramBackground;
+    gramBackground.loadFromFile("../testSWEProject/grammarBackground.jpg");
+    background.setTexture(&gramBackground);
 
-    backButton.setOutlineColor(sf::Color::Black);
-    backButton.setOutlineThickness(5);
-    grammarDisplay.setOutlineColor(sf::Color::Black);
-    grammarDisplay.setOutlineThickness(5);
+    int gramQNo = 0;
+    vector<int> gramRightAns = {1, 0, 2, 1, 2};
 
-    grammarGame.thingsToDraw.emplace("background", grammarBackground);
-    grammarGame.thingsToDraw.emplace("backButton", backButton);
-    grammarGame.thingsToDraw.emplace("grammarDisplay", grammarDisplay);
+    sf::RectangleShape gramBack(sf::Vector2f(400, 100));
+    sf::RectangleShape gramDispBack(sf::Vector2f(800, 200));
+    sf::RectangleShape gramChoice1(sf::Vector2f(400, 75));
+    sf::RectangleShape gramChoice2(sf::Vector2f(400, 75));
+    sf::RectangleShape gramChoice3(sf::Vector2f(400, 75));
+    sf::RectangleShape gramNext(sf::Vector2f (200, 75));
 
-    grammarGame.thingsToDraw.find("backButton")->second.setPosition(50, 75);
-    grammarGame.thingsToDraw.find("grammarDisplay")->second.setPosition(800, 75);
+    gramBack.setOutlineColor(sf::Color::Black);
+    gramBack.setOutlineThickness(5);
+    gramDispBack.setOutlineColor(sf::Color::Black);
+    gramDispBack.setOutlineThickness(5);
+    gramChoice1.setOutlineColor(sf::Color::Black);
+    gramChoice1.setOutlineThickness(5);
+    gramChoice2.setOutlineColor(sf::Color::Black);
+    gramChoice2.setOutlineThickness(5);
+    gramChoice3.setOutlineColor(sf::Color::Black);
+    gramChoice3.setOutlineThickness(5);
+    gramNext.setOutlineColor(sf::Color::Black);
+    gramNext.setOutlineThickness(5);
 
-    grammarGame.setText("Back", "backButton");
+    grammarGame.thingsToDraw.emplace("background", background);
+    grammarGame.thingsToDraw.emplace("gramBack", gramBack);
+    grammarGame.thingsToDraw.emplace("gramDispBack", gramDispBack);
+    grammarGame.thingsToDraw.emplace("gramChoice1", gramChoice1);
+    grammarGame.thingsToDraw.emplace("gramChoice2", gramChoice2);
+    grammarGame.thingsToDraw.emplace("gramChoice3", gramChoice3);
+    grammarGame.thingsToDraw.emplace("gramNext", gramNext);
+
+    grammarGame.thingsToDraw.find("gramBack")->second.setPosition(50, 75);
+    grammarGame.thingsToDraw.find("gramDispBack")->second.setPosition(600, 75);
+    grammarGame.thingsToDraw.find("gramChoice1")->second.setPosition(800, 375);
+    grammarGame.thingsToDraw.find("gramChoice2")->second.setPosition(800, 475);
+    grammarGame.thingsToDraw.find("gramChoice3")->second.setPosition(800, 575);
+    grammarGame.thingsToDraw.find("gramNext")->second.setPosition(800, 675);
+
+    grammarGame.setText("Back", "gramBack");
+    grammarGame.setText("Q1 Display", "gramDispBack");
+    grammarGame.setText("Q1 Answer 1", "gramChoice1");
+    grammarGame.setText("Q1 Answer 2", "gramChoice2");
+    grammarGame.setText("Q1 Answer 3", "gramChoice3");
+    grammarGame.setText("Next", "gramNext");
 
 
 
@@ -160,9 +188,16 @@ int main(int argc, char** argv)
                         }
                     }
                     else if (grammarGame.needToDraw) {
-                        if (grammarGame.thingsToDraw.find("backButton")->second.getGlobalBounds().contains(event.mouseButton.x, event.mouseButton.y)) {
+                        if (grammarGame.thingsToDraw.find("gramBack")->second.getGlobalBounds().contains(event.mouseButton.x, event.mouseButton.y)) {
                             startMenu.needToDraw = true;
                             grammarGame.needToDraw = false;
+                        }
+                        if (grammarGame.thingsToDraw.find("gramNext")->second.getGlobalBounds().contains(event.mouseButton.x, event.mouseButton.y)) {
+                            if(gramQNo < 5) {
+                                gramQNo++;
+                            } else {
+                                gramQNo = 0;
+                            }
                         }
                     }
                 }
