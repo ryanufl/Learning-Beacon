@@ -259,18 +259,6 @@ Ogg_LIB:FILEPATH=C:/Users/38658/CLionProjects/SWEProject/SFML-2.5.1/lib/libogg.a
 //Path to a library.
 OpenAL_LIB:FILEPATH=C:/Users/38658/CLionProjects/SWEProject/SFML-2.5.1/lib/libopenal32.a
 
-//Value Computed by CMake
-Project_BINARY_DIR:STATIC=C:/Users/38658/CLionProjects/SWEProject/cmake-build-debug
-
-//Value Computed by CMake
-Project_SOURCE_DIR:STATIC=C:/Users/38658/CLionProjects/SWEProject
-
-//The directory containing a CMake configuration file for SFML-2.5.1.
-SFML-2.5.1_DIR:PATH=SFML-2.5.1_DIR-NOTFOUND
-
-//The directory containing a CMake configuration file for SFML.
-SFML_DIR:PATH=SFML_DIR-NOTFOUND
-
 //Path to a file.
 SFML_DOC_DIR:PATH=SFML_DOC_DIR-NOTFOUND
 

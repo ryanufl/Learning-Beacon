@@ -65,7 +65,7 @@ int main()
     Screen mathGame(false);                             
     screens.push_back(&mathGame);                       
     sf::Texture mathBackground;                         
-    mathBackground.loadFromFile("mathbackground.jpg");
+    mathBackground.loadFromFile("../testSWEProject/mathbackground.jpg");
     background.setTexture(&mathBackground);
     mathGame.thingsToDraw.emplace("background", background);                                    //math background
     mathGame.thingsToDraw.emplace("backButton", sf::RectangleShape(sf::Vector2f(400, 100)));    // 
@@ -78,6 +78,8 @@ int main()
     mathGame.thingsToDraw.find("choiceOneMath")->second.setPosition(900, 550); // first option 
     mathGame.thingsToDraw.find("choiceTwoMath")->second.setPosition(900, 675); // second option
     mathGame.thingsToDraw.find("nextMath")->second.setPosition(900, 800); // to go to next question
+    mathGame.setText("1+1","choiceOneMath");
+    mathGame.setText("1+3","choiceOneMath");
 
 
 
