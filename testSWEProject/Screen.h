@@ -7,6 +7,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <map>
+#include <unordered_map>
 
 using namespace std;
 struct Screen
@@ -21,7 +22,7 @@ struct Screen
 
 private:
     // use for setText function
-    vector<sf::Text*> text;
+    unordered_map<int, sf::Text*> text;
     sf::Font* _font = new sf::Font;
 
     //

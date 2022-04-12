@@ -10,7 +10,7 @@ Screen::Screen(bool showScreenOnCreation) {
 }
 
 Screen::~Screen() { //not sure if I need this.
-    for(int i = 0; i < text.size(); ++i) delete text[i];
+    for(auto it = text.begin(); it != text.end(); ++it) delete it->second;
     delete _font;
 }
 
@@ -21,8 +21,8 @@ void Screen::showScreen(sf::RenderWindow &w) {
             w.draw(i->second);
         }
     }
-    for (int i = 0; i < text.size(); ++i) {
-        w.draw(*text[i]);
+    for (auto it = text.begin(); it != text.end(); ++it) {
+        w.draw(*it->second);
     }
 }
 
@@ -36,7 +36,7 @@ void Screen::setText(string text_to_output, string where_to_display) {
     sf::FloatRect RectangleShapeRect = thingsToDraw[where_to_display].getLocalBounds();
     _text->setPosition(thingsToDraw[where_to_display].getPosition().x + (RectangleShapeRect.width / 2 - textRect.width / 2),
                        thingsToDraw[where_to_display].getPosition().y + (RectangleShapeRect.height / 2 - 25));
-    text.emplace_back(_text);
+    text[thingsToDraw[where_to_display].getPosition().x * thingsToDraw[where_to_display].getPosition().y] = _text;
 }
 
 
