@@ -9,6 +9,9 @@
 
 using namespace std;
 
+void setKey(vector<sf::RectangleShape>& keys, int priorKey, int currentKey, int offset);
+void setCurrentLine(string input, vector<sf::RectangleShape>& output, vector<sf::RectangleShape>& references);
+
 int main(int argc, char** argv)
 {
     sf::RenderWindow window(sf::VideoMode(1600, 1000), "Learning Beacon", sf::Style::Close); //creates intial window
@@ -37,7 +40,7 @@ int main(int argc, char** argv)
     vector<Screen*> screens;                                               //used to correctly print one screen at a time
 
 
-    Screen startMenu(true);                                               //
+    Screen startMenu(false);                                               //
     screens.push_back(&startMenu);                                        //
     startMenu.thingsToDraw.emplace("background", background);             //adds all buttons/images used for startMenu ========WILL NEED TO CHANGE WHEN USING SPRITES========
     startMenu.thingsToDraw.emplace("playButton", playButton);                   //
@@ -82,6 +85,96 @@ int main(int argc, char** argv)
     mathGame.thingsToDraw.find("choiceTwoMath")->second.setPosition(900, 675); // second option
     mathGame.thingsToDraw.find("nextMath")->second.setPosition(900, 800); // to go to next question
 
+    Screen typingGame(true);
+    screens.push_back(&typingGame);
+    sf::RectangleShape testLetter(sf::Vector2f(100, 100));
+    sf::Texture font;
+    font.loadFromFile("../testSWEProject/src/image/font.png");
+    testLetter.setTexture(&font);
+    testLetter.setOutlineThickness(5);
+    testLetter.setOutlineColor(sf::Color::Black);
+    
+    vector<sf::RectangleShape> keys;
+    for (int i = 0; i < 26; i++) {
+        keys.push_back(testLetter);
+        if (i < 13) {
+            keys.at(i).setTextureRect(sf::IntRect(17 + 73 * i, 20, 40 + i, 40));
+        }
+        else {
+            keys.at(i).setTextureRect(sf::IntRect(17 + 73 * (i-13), 100, 40 + (i-13), 40));
+        }
+        keys.at(i).setPosition(i * 105 + 20, 60);
+    } 
+    //adding a space key
+    keys.push_back(sf::RectangleShape(sf::Vector2f(100,100)));
+    keys.at(26).setTexture(&font);
+
+    keys.at(26).setTextureRect(sf::IntRect(120, 100, 1, 1));
+
+    //first letter of each row used as a reference, q is used as reference for a and z, so move 'q' and move entire keyboard
+    keys.at(16).setPosition(300,450);//q //first row, offset each by 65, second row starts 1/4 a key after first, third row starts 1/2 a key after second
+
+    setKey(keys, 16, 22, 105); //row 1
+    setKey(keys, 22, 4, 105);
+    setKey(keys, 4, 17, 105);
+    setKey(keys, 17, 19, 105);
+    setKey(keys, 19, 24, 105);
+    setKey(keys, 24, 20, 105);
+    setKey(keys, 20, 8, 105);
+    setKey(keys, 8, 14, 105);
+    setKey(keys, 14, 15, 105);
+
+    //row 2
+    keys.at(0).setPosition(keys.at(16).getPosition().x + 25, keys.at(16).getPosition().y + 105);
+    setKey(keys, 0, 18, 105);
+    setKey(keys, 18, 3, 105);
+    setKey(keys, 3, 5, 105);
+    setKey(keys, 5, 6, 105);
+    setKey(keys, 6, 7, 105);
+    setKey(keys, 7, 9, 105);
+    setKey(keys, 9, 10, 105);
+    setKey(keys, 10, 11, 105);
+
+    //row 3
+    keys.at(25).setPosition(keys.at(0).getPosition().x + 50, keys.at(0).getPosition().y + 105);
+    setKey(keys, 25, 23, 105);
+    setKey(keys, 23, 2, 105);
+    setKey(keys, 2, 21, 105);
+    setKey(keys, 21, 1, 105);
+    setKey(keys, 1, 13, 105);
+    setKey(keys, 13, 12, 105);
+    
+    //manually fix J and Q bc they are a little too big
+    keys.at(9).setTextureRect(sf::IntRect(17 + 73 * 9, 20, 45 + 9, 52));
+    keys.at(16).setTextureRect(sf::IntRect(17 + 73 * (16 - 13), 100, 40 + (16 - 13), 52));
+
+    sf::RectangleShape greenOrRedTint(testLetter.getSize());
+    vector<sf::RectangleShape> keyTint;
+
+    for (int i = 0; i < keys.size(); i++) {
+        keyTint.push_back(greenOrRedTint);
+        keyTint.at(i).setPosition(keys.at(i).getPosition());
+    }
+
+    for (int i = 0; i < keys.size(); i++) {
+        typingGame.thingsToDraw.emplace("testLetter" + to_string(i), keys.at(i));
+        typingGame.thingsToDraw.emplace("keyTint" + to_string(i), keyTint.at(i));
+    }
+
+    vector<sf::RectangleShape> currentLine;
+    setCurrentLine("this is a test", currentLine, keys);
+    for (int i = 0; i < currentLine.size(); i++) {
+        typingGame.thingsToDraw.emplace("currentChar" + to_string(i), currentLine.at(i));
+    }
+    sf::RectangleShape greyOrWhiteTint(currentLine.at(0).getSize());
+    vector<sf::RectangleShape> currentLineTint;
+    for (int i = 0; i < currentLine.size(); i++) {
+        currentLineTint.push_back(greyOrWhiteTint);
+        currentLineTint.at(i).setPosition(currentLine.at(i).getPosition());
+    }
+    for (int i = 0; i < currentLineTint.size(); i++) {
+        typingGame.thingsToDraw.emplace("acurrentCharTint" + to_string(i), currentLineTint.at(i));
+    }
 
 
     while (window.isOpen())
@@ -135,9 +228,23 @@ int main(int argc, char** argv)
                     }
                 }
             }
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+            {
+                typingGame.thingsToDraw.find("keyTint0")->second.setFillColor(sf::Color(sf::Color(255, 0, 0, 255)));
+            }
+            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::B))
+            {
+                typingGame.thingsToDraw.find("acurrentCharTint0")->second.setFillColor(sf::Color(0, 0, 0, 255));
+               // typingGame.thingsToDraw.find("currentChar0")->second.setOutlineColor(sf::Color::Black);
+               // typingGame.thingsToDraw.find("currentChar0")->second.setOutlineThickness(5);
+            }
+            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::C))
+            {
+                typingGame.thingsToDraw.find("acurrentCharTint0")->second.setPosition(500, 400);
+            }
         }
 
-        window.clear();
+        window.clear(sf::Color::White);
         for (int i = 0; i < screens.size(); i++) {
             if (screens.at(i)->needToDraw) {
                 screens.at(i)->showScreen(window);
@@ -152,6 +259,40 @@ int main(int argc, char** argv)
     return res;
 }              
 
+
+
+
+void setKey(vector<sf::RectangleShape>& keys, int referenceKey, int currentKey, int offset) {
+    keys.at(currentKey).setPosition(keys.at(referenceKey).getPosition().x + offset, keys.at(referenceKey).getPosition().y);
+}
+
+void setCurrentLine(string input, vector<sf::RectangleShape>& output, vector<sf::RectangleShape>& references) {
+    string acceptableChars = "abcdefghijklmnopqrstuvwxyz ";
+    for (int i = 0; i < input.length(); i++) {
+        char currentLetter = input.at(i);
+        if (acceptableChars.find(currentLetter) != string::npos) {
+            //cout << acceptableChars.find(currentLetter) << endl;
+            output.push_back(references.at(acceptableChars.find(currentLetter)));
+            output.at(output.size() - 1).setOutlineThickness(0);
+            output.at(output.size() - 1).setSize(sf::Vector2f(40, 40));
+            //output.at(output.size() - 1).setOutlineThickness(1);
+        }
+    }
+    if (output.size() >= 1) {
+        output.at(0).setPosition(100, 100);
+    }
+    for (int i = 1; i < output.size(); i++) {
+        setKey(output, i - 1, i, 40);
+    }
+    for (int i = output.size() - 1; i >= 0; i--) {
+        output.push_back(sf::RectangleShape(output.at(0).getSize()));
+        //output.at(output.size()-1).setPosition(output.at(0).getPosition());
+        output.at(output.size() - 1).setFillColor(sf::Color::Blue);
+    }
+    //for (int i = 0; i < output.size() / 2; i++) {
+    //    output.at(i + (output.size()-1)/2).setPosition(output.at(i).getPosition());
+    //}
+}
 
 
 TEST_CASE("Testing Screen Creation and Setting Position") {
