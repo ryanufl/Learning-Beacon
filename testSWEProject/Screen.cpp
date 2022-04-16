@@ -38,5 +38,3 @@ void Screen::setText(string text_to_output, string where_to_display) {
                        thingsToDraw[where_to_display].getPosition().y + (RectangleShapeRect.height / 2 - 25));
     text[thingsToDraw[where_to_display].getPosition().x * thingsToDraw[where_to_display].getPosition().y] = _text;
 }
-
-

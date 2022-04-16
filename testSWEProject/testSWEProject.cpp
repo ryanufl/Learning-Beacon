@@ -128,10 +128,10 @@ int main(int argc, char** argv)
     grammarGame.thingsToDraw.find("gramNext")->second.setPosition(800, 675);
 
     grammarGame.setText("Back", "gramBack");
-    grammarGame.setText("Q1 Display", "gramDispBack");
-    grammarGame.setText("Q1 Answer 0", "gramA0");
-    grammarGame.setText("Q1 Answer 1", "gramA1");
-    grammarGame.setText("Q1 Answer 2", "gramA2");
+    grammarGame.setText("What is '!' called?", "gramDispBack");
+    grammarGame.setText("Period", "gramA0");
+    grammarGame.setText("Exclamation mark", "gramA1");
+    grammarGame.setText("Question mark", "gramA2");
     grammarGame.setText("Next", "gramNext");
 
     while (window.isOpen())
@@ -197,25 +197,27 @@ int main(int argc, char** argv)
                             grammarGame.thingsToDraw.find("gramA2")->second.setFillColor(sf::Color::White);
 
                             if(gramQNo == 1) {
-                                grammarGame.setText("Q2 Display", "gramDispBack");
-                                grammarGame.setText("Q2 Answer 0", "gramA0");
-                                grammarGame.setText("Q2 Answer 1", "gramA1");
-                                grammarGame.setText("Q2 Answer 2", "gramA2");
+                                grammarGame.setText(
+                                        "Which one of these ends a sentence?",
+                                        "gramDispBack");
+                                grammarGame.setText(".", "gramA0");
+                                grammarGame.setText("\'", "gramA1");
+                                grammarGame.setText(",", "gramA2");
                             } else if(gramQNo == 2) {
-                                grammarGame.setText("Q3 Display", "gramDispBack");
-                                grammarGame.setText("Q3 Answer 0", "gramA0");
-                                grammarGame.setText("Q3 Answer 1", "gramA1");
-                                grammarGame.setText("Q3 Answer 2", "gramA2");
+                                grammarGame.setText("What is the word green in the\nsentence\"This apple is green.\"?", "gramDispBack");
+                                grammarGame.setText("A noun", "gramA0");
+                                grammarGame.setText("A verb", "gramA1");
+                                grammarGame.setText("An adjective", "gramA2");
                             } else if(gramQNo == 3) {
-                                grammarGame.setText("Q4 Display", "gramDispBack");
-                                grammarGame.setText("Q4 Answer 0", "gramA0");
-                                grammarGame.setText("Q4 Answer 1", "gramA1");
-                                grammarGame.setText("Q4 Answer 2", "gramA2");
+                                grammarGame.setText("Who is the subject in the sentence\n\"Kevin is giving Sam and Sara his pencil.\"?", "gramDispBack");
+                                grammarGame.setText("Sam", "gramA0");
+                                grammarGame.setText("Kevin", "gramA1");
+                                grammarGame.setText("Sara", "gramA2");
                             } else if (gramQNo == 4) {
-                                grammarGame.setText("Q5 Display", "gramDispBack");
-                                grammarGame.setText("Q5 Answer 0", "gramA0");
-                                grammarGame.setText("Q5 Answer 1", "gramA1");
-                                grammarGame.setText("Q5 Answer 2", "gramA2");
+                                grammarGame.setText("What is the possessive in the sentence\n\"Daniel's eraser is in the desk.\"?", "gramDispBack");
+                                grammarGame.setText("Desk", "gramA0");
+                                grammarGame.setText("Eraser", "gramA1");
+                                grammarGame.setText("Daniel's", "gramA2");
                             } else {
                                 grammarGame.setText("End Display", "gramDispBack");
                                 grammarGame.setText("End Answer 0", "gramA0");
