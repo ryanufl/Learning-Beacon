@@ -195,22 +195,18 @@ int main()
                         if (mathGame.thingsToDraw.find("choiceOneMath")->second.getGlobalBounds().contains(event.mouseButton.x, event.mouseButton.y)) { // click on first choice
                             if (count1 == 1) {
                                 mathGame.thingsToDraw.find("choiceOneMath")->second.setFillColor(sf::Color::Green);
-                                mathGame.setText("CORRECT", "mathDisplay");
                             }
                             else {
                                 mathGame.thingsToDraw.find("choiceOneMath")->second.setFillColor(sf::Color::Red);
-                                mathGame.setText("INCORRECT", "mathDisplay");
                             }
 
                         }
                         else if (mathGame.thingsToDraw.find("choiceTwoMath")->second.getGlobalBounds().contains(event.mouseButton.x, event.mouseButton.y)) { //click on second choice
                             if (count1 == 2) {
                                 mathGame.thingsToDraw.find("choiceTwoMath")->second.setFillColor(sf::Color::Green);
-                                mathGame.setText("CORRECT", "mathDisplay");
                             }
                             else {
                                 mathGame.thingsToDraw.find("choiceTwoMath")->second.setFillColor(sf::Color::Red);
-                                mathGame.setText("INCORRECT", "mathDisplay");
                             }
                         }
                         else if (mathGame.thingsToDraw.find("nextMath")->second.getGlobalBounds().contains(event.mouseButton.x, event.mouseButton.y)) { // click to next game
