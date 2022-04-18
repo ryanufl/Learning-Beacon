@@ -165,6 +165,11 @@ int main(int argc, char** argv)
     mathGame.setText("Click Start to start", "mathDisplay");
     mathGame.setText("Start", "nextMath");
 
+
+    //typingGame.thingsToDraw.emplace("backButton", sf::RectangleShape(sf::Vector2f(400, 100)));   
+    //typingGame.thingsToDraw.find("backButton")->second.setPosition(50, 75);     
+
+
     Screen grammarGame(false);
     screens.push_back(&grammarGame);
 
@@ -175,12 +180,15 @@ int main(int argc, char** argv)
     int gramQNo = 0;
     vector<int> gramRightAns = { 1, 0, 2, 1, 2 };
 
+
     sf::RectangleShape gramBack(sf::Vector2f(400, 100));
     sf::RectangleShape gramDispBack(sf::Vector2f(800, 200));
     sf::RectangleShape gramA0(sf::Vector2f(400, 75));
     sf::RectangleShape gramA1(sf::Vector2f(400, 75));
     sf::RectangleShape gramA2(sf::Vector2f(400, 75));
+
     sf::RectangleShape gramNext(sf::Vector2f(200, 75));
+
 
     gramBack.setOutlineColor(sf::Color::Black);
     gramBack.setOutlineThickness(5);
@@ -238,6 +246,9 @@ int main(int argc, char** argv)
     vector<int> wrongKeys; //used for turning red tints off
     ifstream inputFile("typingLines.txt");
     vector<string> differentLines;
+    typingGame.thingsToDraw.emplace("backButton", sf::RectangleShape(sf::Vector2f(100, 100)));
+    typingGame.thingsToDraw.find("backButton")->second.setPosition(0, 0);
+    typingGame.setText("Back", "backButton");
 
     string readInLine;
     while (getline(inputFile, readInLine)) {
@@ -363,10 +374,6 @@ int main(int argc, char** argv)
                         else if (startMenu.thingsToDraw.find("exitButton")->second.getGlobalBounds().contains(event.mouseButton.x, event.mouseButton.y)) {//tests bounds of button and if the screen is currently visable
                             window.close();
                         }
-                        else if (startMenu.thingsToDraw.find("exitButton")->second.getGlobalBounds().contains(event.mouseButton.x, event.mouseButton.y)) {//tests bounds of button and if the screen is currently visable
-                            startMenu.needToDraw = false;
-                            mathGame.needToDraw = true;
-                        }
                     }
                     else if (playMenu.needToDraw) {
                         //only if on play menu screen, change colors to yellow for button clicking.
@@ -374,6 +381,7 @@ int main(int argc, char** argv)
                             playMenu.needToDraw = false;
                             mathGame.needToDraw = true;
                         }
+
                         else if (playMenu.thingsToDraw.find("GrammarGame_Button")->second.getGlobalBounds().contains(event.mouseButton.x, event.mouseButton.y)) {
                             playMenu.needToDraw = false;
                             grammarGame.needToDraw = true;
@@ -505,6 +513,7 @@ int main(int argc, char** argv)
                             grammarGame.thingsToDraw.find("gramA1")->second.setFillColor(sf::Color::White);
                             grammarGame.thingsToDraw.find("gramA2")->second.setFillColor(sf::Color::White);
 
+
                             if (gramQNo == 1) {
                                 grammarGame.setText(
                                     "Which one of these ends a sentence?",
@@ -518,20 +527,26 @@ int main(int argc, char** argv)
                                 grammarGame.setText("A noun", "gramA0");
                                 grammarGame.setText("A verb", "gramA1");
                                 grammarGame.setText("An adjective", "gramA2");
+
                             }
                             else if (gramQNo == 3) {
+
                                 grammarGame.setText("Who is the subject in the sentence\n\"Kevin is giving Sam and Sara his pencil.\"?", "gramDispBack");
                                 grammarGame.setText("Sam", "gramA0");
                                 grammarGame.setText("Kevin", "gramA1");
                                 grammarGame.setText("Sara", "gramA2");
+
                             }
                             else if (gramQNo == 4) {
+
                                 grammarGame.setText("What is the possessive in the sentence\n\"Daniel's eraser is in the desk.\"?", "gramDispBack");
                                 grammarGame.setText("Desk", "gramA0");
                                 grammarGame.setText("Eraser", "gramA1");
                                 grammarGame.setText("Daniel's", "gramA2");
+
                             }
                             else {
+
                                 grammarGame.setText("End Display", "gramDispBack");
                                 grammarGame.setText("End Answer 0", "gramA0");
                                 grammarGame.setText("End Answer 1", "gramA1");
@@ -539,6 +554,7 @@ int main(int argc, char** argv)
                             }
                         }
                         else if (grammarGame.thingsToDraw.find("gramA0")->second.getGlobalBounds().contains(event.mouseButton.x, event.mouseButton.y)) {
+
                             if (gramQNo == 1) {
                                 grammarGame.thingsToDraw.find("gramA0")->second.setFillColor(sf::Color::Green);
                             }
@@ -547,6 +563,7 @@ int main(int argc, char** argv)
                             }
                         }
                         else if (grammarGame.thingsToDraw.find("gramA1")->second.getGlobalBounds().contains(event.mouseButton.x, event.mouseButton.y)) {
+
                             if (gramQNo == 0 || gramQNo == 3) {
                                 grammarGame.thingsToDraw.find("gramA1")->second.setFillColor(sf::Color::Green);
                             }
@@ -568,6 +585,10 @@ int main(int argc, char** argv)
 
             if (typingGame.needToDraw) {
                 //actual code for the typing game logic
+                if (typingGame.thingsToDraw.find("backButton")->second.getGlobalBounds().contains(event.mouseButton.x, event.mouseButton.y)) {//tests bounds of button and if the screen is currently visable
+                    startMenu.needToDraw = true;
+                    typingGame.needToDraw = false;
+                }
 
 
                 if (event.type == sf::Event::KeyPressed) {
