@@ -166,6 +166,7 @@ int main(int argc, char** argv)
     mathGame.setText("Start", "nextMath");
 
 
+
     Screen grammarGame(false);
     screens.push_back(&grammarGame);
 
@@ -242,6 +243,9 @@ int main(int argc, char** argv)
     vector<int> wrongKeys; //used for turning red tints off
     ifstream inputFile("typingLines.txt");
     vector<string> differentLines;
+    typingGame.thingsToDraw.emplace("backButton", sf::RectangleShape(sf::Vector2f(100, 100)));
+    typingGame.thingsToDraw.find("backButton")->second.setPosition(0, 0);
+    typingGame.setText("Back", "backButton");
 
     string readInLine;
     while (getline(inputFile, readInLine)) {
@@ -366,10 +370,6 @@ int main(int argc, char** argv)
                         }
                         else if (startMenu.thingsToDraw.find("exitButton")->second.getGlobalBounds().contains(event.mouseButton.x, event.mouseButton.y)) {//tests bounds of button and if the screen is currently visable
                             window.close();
-                        }
-                        else if (startMenu.thingsToDraw.find("exitButton")->second.getGlobalBounds().contains(event.mouseButton.x, event.mouseButton.y)) {//tests bounds of button and if the screen is currently visable
-                            startMenu.needToDraw = false;
-                            mathGame.needToDraw = true;
                         }
                     }
                     else if (playMenu.needToDraw) {
@@ -582,6 +582,10 @@ int main(int argc, char** argv)
 
             if (typingGame.needToDraw) {
                 //actual code for the typing game logic
+                if (typingGame.thingsToDraw.find("backButton")->second.getGlobalBounds().contains(event.mouseButton.x, event.mouseButton.y)) {//tests bounds of button and if the screen is currently visable
+                    startMenu.needToDraw = true;
+                    typingGame.needToDraw = false;
+                }
 
 
                 if (event.type == sf::Event::KeyPressed) {
