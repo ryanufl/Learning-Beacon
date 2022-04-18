@@ -457,7 +457,7 @@ void setCurrentLine(string input, vector<sf::RectangleShape>& output, vector<sf:
         }
     }
     if (output.size() >= 1) {
-        output.at(0).setPosition(100, 100); //sets first character in sentence
+        output.at(0).setPosition(400, 200); //sets first character in sentence
     }
     for (int i = 1; i < output.size(); i++) {
         setKey(output, i - 1, i, 40); //sets rest of sentence, all on one line, big sentences will be bad.
