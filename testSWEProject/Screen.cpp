@@ -15,7 +15,9 @@ Screen::~Screen() { //not sure if I need this.
 }
 
 void Screen::showScreen(sf::RenderWindow &w) {
-    w.draw(thingsToDraw.find("background")->second);
+    if (thingsToDraw.find("background") != thingsToDraw.end()) {
+        w.draw(thingsToDraw.find("background")->second);
+    }
     for (auto i = thingsToDraw.begin(); i != thingsToDraw.end(); i++) {
         if (i->first != "background") {
             w.draw(i->second);
