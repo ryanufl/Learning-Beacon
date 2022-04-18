@@ -90,6 +90,12 @@
 		<Unit filename="C:/Users/38658/CLionProjects/SWEProject/testSWEProject/Screen.h">
 			<Option target="SWEProject"/>
 		</Unit>
+		<Unit filename="C:/Users/38658/CLionProjects/SWEProject/testSWEProject/mathGame.cpp">
+			<Option target="SWEProject"/>
+		</Unit>
+		<Unit filename="C:/Users/38658/CLionProjects/SWEProject/testSWEProject/mathGame.h">
+			<Option target="SWEProject"/>
+		</Unit>
 		<Unit filename="C:/Users/38658/CLionProjects/SWEProject/testSWEProject/testSWEProject.cpp">
 			<Option target="SWEProject"/>
 		</Unit>

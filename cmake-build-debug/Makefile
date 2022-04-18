@@ -152,6 +152,30 @@ testSWEProject/Screen.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\SWEProject.dir\build.make CMakeFiles/SWEProject.dir/testSWEProject/Screen.cpp.s
 .PHONY : testSWEProject/Screen.cpp.s
 
+testSWEProject/mathGame.obj: testSWEProject/mathGame.cpp.obj
+.PHONY : testSWEProject/mathGame.obj
+
+# target to build an object file
+testSWEProject/mathGame.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\SWEProject.dir\build.make CMakeFiles/SWEProject.dir/testSWEProject/mathGame.cpp.obj
+.PHONY : testSWEProject/mathGame.cpp.obj
+
+testSWEProject/mathGame.i: testSWEProject/mathGame.cpp.i
+.PHONY : testSWEProject/mathGame.i
+
+# target to preprocess a source file
+testSWEProject/mathGame.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\SWEProject.dir\build.make CMakeFiles/SWEProject.dir/testSWEProject/mathGame.cpp.i
+.PHONY : testSWEProject/mathGame.cpp.i
+
+testSWEProject/mathGame.s: testSWEProject/mathGame.cpp.s
+.PHONY : testSWEProject/mathGame.s
+
+# target to generate assembly for a file
+testSWEProject/mathGame.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\SWEProject.dir\build.make CMakeFiles/SWEProject.dir/testSWEProject/mathGame.cpp.s
+.PHONY : testSWEProject/mathGame.cpp.s
+
 testSWEProject/testSWEProject.obj: testSWEProject/testSWEProject.cpp.obj
 .PHONY : testSWEProject/testSWEProject.obj
 
@@ -188,6 +212,9 @@ help:
 	@echo ... testSWEProject/Screen.obj
 	@echo ... testSWEProject/Screen.i
 	@echo ... testSWEProject/Screen.s
+	@echo ... testSWEProject/mathGame.obj
+	@echo ... testSWEProject/mathGame.i
+	@echo ... testSWEProject/mathGame.s
 	@echo ... testSWEProject/testSWEProject.obj
 	@echo ... testSWEProject/testSWEProject.i
 	@echo ... testSWEProject/testSWEProject.s
