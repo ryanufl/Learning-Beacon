@@ -87,7 +87,57 @@ int main(int argc, char** argv)
     mathGame.thingsToDraw.find("choiceTwoMath")->second.setPosition(900, 675); // second option
     mathGame.thingsToDraw.find("nextMath")->second.setPosition(900, 800); // to go to next question
 
+    Screen grammarGame(false);
+    screens.push_back(&grammarGame);
 
+    sf::Texture gramBackground;
+    gramBackground.loadFromFile("../testSWEProject/grammarBackground.jpg");
+    background.setTexture(&gramBackground);
+
+    int gramQNo = 0;
+    vector<int> gramRightAns = {1, 0, 2, 1, 2};
+
+    sf::RectangleShape gramBack(sf::Vector2f(400, 100));
+    sf::RectangleShape gramDispBack(sf::Vector2f(800, 200));
+    sf::RectangleShape gramA0(sf::Vector2f(400, 75));
+    sf::RectangleShape gramA1(sf::Vector2f(400, 75));
+    sf::RectangleShape gramA2(sf::Vector2f(400, 75));
+    sf::RectangleShape gramNext(sf::Vector2f (200, 75));
+
+    gramBack.setOutlineColor(sf::Color::Black);
+    gramBack.setOutlineThickness(5);
+    gramDispBack.setOutlineColor(sf::Color::Black);
+    gramDispBack.setOutlineThickness(5);
+    gramA0.setOutlineColor(sf::Color::Black);
+    gramA0.setOutlineThickness(5);
+    gramA1.setOutlineColor(sf::Color::Black);
+    gramA1.setOutlineThickness(5);
+    gramA2.setOutlineColor(sf::Color::Black);
+    gramA2.setOutlineThickness(5);
+    gramNext.setOutlineColor(sf::Color::Black);
+    gramNext.setOutlineThickness(5);
+
+    grammarGame.thingsToDraw.emplace("background", background);
+    grammarGame.thingsToDraw.emplace("gramBack", gramBack);
+    grammarGame.thingsToDraw.emplace("gramDispBack", gramDispBack);
+    grammarGame.thingsToDraw.emplace("gramA0", gramA0);
+    grammarGame.thingsToDraw.emplace("gramA1", gramA1);
+    grammarGame.thingsToDraw.emplace("gramA2", gramA2);
+    grammarGame.thingsToDraw.emplace("gramNext", gramNext);
+
+    grammarGame.thingsToDraw.find("gramBack")->second.setPosition(50, 75);
+    grammarGame.thingsToDraw.find("gramDispBack")->second.setPosition(600, 75);
+    grammarGame.thingsToDraw.find("gramA0")->second.setPosition(800, 375);
+    grammarGame.thingsToDraw.find("gramA1")->second.setPosition(800, 475);
+    grammarGame.thingsToDraw.find("gramA2")->second.setPosition(800, 575);
+    grammarGame.thingsToDraw.find("gramNext")->second.setPosition(800, 675);
+
+    grammarGame.setText("Back", "gramBack");
+    grammarGame.setText("What is '!' called?", "gramDispBack");
+    grammarGame.setText("Period", "gramA0");
+    grammarGame.setText("Exclamation mark", "gramA1");
+    grammarGame.setText("Question mark", "gramA2");
+    grammarGame.setText("Next", "gramNext");
 
 
 
@@ -247,9 +297,11 @@ int main(int argc, char** argv)
                             playMenu.needToDraw = false;
                             mathGame.needToDraw = true;
                         }
-                        else if(playMenu.thingsToDraw.find("GrammarGame_Button")->second.getGlobalBounds().contains(event.mouseButton.x, event.mouseButton.y))
-                            playMenu.thingsToDraw.find("GrammarGame_Button")->second.setFillColor(sf::Color::Yellow);
-                        else if (playMenu.thingsToDraw.find("TypingGame_Button")->second.getGlobalBounds().contains(event.mouseButton.x, event.mouseButton.y)){
+                        else if(playMenu.thingsToDraw.find("GrammarGame_Button")->second.getGlobalBounds().contains(event.mouseButton.x, event.mouseButton.y)) {
+                            playMenu.needToDraw = false;
+                            grammarGame.needToDraw = true;
+                        }
+                       else if (playMenu.thingsToDraw.find("TypingGame_Button")->second.getGlobalBounds().contains(event.mouseButton.x, event.mouseButton.y)){
                             playMenu.needToDraw = false;
                             typingGame.needToDraw = true;
                         }
@@ -268,6 +320,68 @@ int main(int argc, char** argv)
                         else if (mathGame.thingsToDraw.find("backButton")->second.getGlobalBounds().contains(event.mouseButton.x, event.mouseButton.y)) {//tests bounds of button and if the screen is currently visable
                             startMenu.needToDraw = true;
                             mathGame.needToDraw = false;
+                        }
+                    }
+                    else if (grammarGame.needToDraw) {
+                        if (grammarGame.thingsToDraw.find("gramBack")->second.getGlobalBounds().contains(event.mouseButton.x, event.mouseButton.y)) {
+                            startMenu.needToDraw = true;
+                            grammarGame.needToDraw = false;
+                        }
+                        else if (grammarGame.thingsToDraw.find("gramNext")->second.getGlobalBounds().contains(event.mouseButton.x, event.mouseButton.y)) {
+                            gramQNo++;
+                            grammarGame.thingsToDraw.find("gramA0")->second.setFillColor(sf::Color::White);
+                            grammarGame.thingsToDraw.find("gramA1")->second.setFillColor(sf::Color::White);
+                            grammarGame.thingsToDraw.find("gramA2")->second.setFillColor(sf::Color::White);
+
+                            if(gramQNo == 1) {
+                                grammarGame.setText(
+                                        "Which one of these ends a sentence?",
+                                        "gramDispBack");
+                                grammarGame.setText(".", "gramA0");
+                                grammarGame.setText("\'", "gramA1");
+                                grammarGame.setText(",", "gramA2");
+                            } else if(gramQNo == 2) {
+                                grammarGame.setText("What is the word green in the\nsentence\"This apple is green.\"?", "gramDispBack");
+                                grammarGame.setText("A noun", "gramA0");
+                                grammarGame.setText("A verb", "gramA1");
+                                grammarGame.setText("An adjective", "gramA2");
+                            } else if(gramQNo == 3) {
+                                grammarGame.setText("Who is the subject in the sentence\n\"Kevin is giving Sam and Sara his pencil.\"?", "gramDispBack");
+                                grammarGame.setText("Sam", "gramA0");
+                                grammarGame.setText("Kevin", "gramA1");
+                                grammarGame.setText("Sara", "gramA2");
+                            } else if (gramQNo == 4) {
+                                grammarGame.setText("What is the possessive in the sentence\n\"Daniel's eraser is in the desk.\"?", "gramDispBack");
+                                grammarGame.setText("Desk", "gramA0");
+                                grammarGame.setText("Eraser", "gramA1");
+                                grammarGame.setText("Daniel's", "gramA2");
+                            } else {
+                                grammarGame.setText("End Display", "gramDispBack");
+                                grammarGame.setText("End Answer 0", "gramA0");
+                                grammarGame.setText("End Answer 1", "gramA1");
+                                grammarGame.setText("End Answer 2", "gramA2");
+                            }
+                        }
+                        else if (grammarGame.thingsToDraw.find("gramA0")->second.getGlobalBounds().contains(event.mouseButton.x, event.mouseButton.y)) {
+                            if(gramQNo == 1) {
+                                grammarGame.thingsToDraw.find("gramA0")->second.setFillColor(sf::Color::Green);
+                            } else {
+                                grammarGame.thingsToDraw.find("gramA0")->second.setFillColor(sf::Color::Red);
+                            }
+                        }
+                        else if (grammarGame.thingsToDraw.find("gramA1")->second.getGlobalBounds().contains(event.mouseButton.x, event.mouseButton.y)) {
+                            if(gramQNo == 0 || gramQNo == 3) {
+                                grammarGame.thingsToDraw.find("gramA1")->second.setFillColor(sf::Color::Green);
+                            } else {
+                                grammarGame.thingsToDraw.find("gramA1")->second.setFillColor(sf::Color::Red);
+                            }
+                        }
+                        else if (grammarGame.thingsToDraw.find("gramA2")->second.getGlobalBounds().contains(event.mouseButton.x, event.mouseButton.y)) {
+                            if(gramQNo == 2 || gramQNo == 4) {
+                                grammarGame.thingsToDraw.find("gramA2")->second.setFillColor(sf::Color::Green);
+                            } else {
+                                grammarGame.thingsToDraw.find("gramA2")->second.setFillColor(sf::Color::Red);
+                            }
                         }
                     }
                 }
