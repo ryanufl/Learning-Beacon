@@ -166,9 +166,6 @@ int main(int argc, char** argv)
     mathGame.setText("Start", "nextMath");
 
 
-    //typingGame.thingsToDraw.emplace("backButton", sf::RectangleShape(sf::Vector2f(400, 100)));   
-    //typingGame.thingsToDraw.find("backButton")->second.setPosition(50, 75);     
-
 
     Screen grammarGame(false);
     screens.push_back(&grammarGame);
@@ -382,11 +379,11 @@ int main(int argc, char** argv)
                             mathGame.needToDraw = true;
                         }
 
-                        else if (playMenu.thingsToDraw.find("GrammarGame_Button")->second.getGlobalBounds().contains(event.mouseButton.x, event.mouseButton.y)) {
+                        else if(playMenu.thingsToDraw.find("GrammarGame_Button")->second.getGlobalBounds().contains(event.mouseButton.x, event.mouseButton.y)) {
                             playMenu.needToDraw = false;
                             grammarGame.needToDraw = true;
                         }
-                        else if (playMenu.thingsToDraw.find("TypingGame_Button")->second.getGlobalBounds().contains(event.mouseButton.x, event.mouseButton.y)) {
+                       else if (playMenu.thingsToDraw.find("TypingGame_Button")->second.getGlobalBounds().contains(event.mouseButton.x, event.mouseButton.y)){
                             playMenu.needToDraw = false;
                             typingGame.needToDraw = true;
                         }
