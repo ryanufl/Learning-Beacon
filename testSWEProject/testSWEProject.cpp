@@ -2,9 +2,79 @@
 #include <iostream>
 #include <vector>
 #include "Screen.h"
-
+#include <cstdlib>
+#include <string>
 
 using namespace std;
+int a, b = 0;
+int add(int &a, int &b) {
+    //int a = rand() % 10; // up to 10
+    //int b = rand() % 10; // up to 10
+    //add();
+    return a + b;
+}
+int divide(int &a, int &b){
+    //int a = rand() % 10;
+    //int b = rand() % 10;
+    int c = a * b;
+    int d = c / b;
+    return d;
+
+}
+int multiply(int &a, int &b){
+    //int a = rand() % 10;
+    //int b = rand() % 10;
+    return a * b;
+}
+int subtract(int &a, int &b){
+    //int a = rand() % 20;
+    //int b = rand() % 20;
+    if (a > b) {
+        return a - b;
+    }
+    return b - a;
+}
+string randomFunct(int &count) {
+    string display = "";
+    if (count == 0) {//add 
+        a = rand() % 10;
+        b = rand() % 10;
+        add(a, b);
+        display = to_string(a) + " + " + to_string(b);
+    }
+    else if (count == 1) {//subtract
+        a = rand() % 20;
+        b = rand() % 20;
+        subtract(a, b);
+        if (a > b) {
+            display = to_string(a) + " - " + to_string(b);
+        }
+        else {
+            display = to_string(b) + " - " + to_string(a);
+        }
+       
+    }
+    else if (count == 2) {//multiply
+        a = rand() % 10;
+        b = rand() % 10;
+        multiply(a, b);
+        display = to_string(a) + " X " + to_string(b);
+    }
+    else if (count == 3) {//divide
+        a = rand() % 10;
+        b = rand() % 10 + 1;
+        int c = a * b;
+        divide(a, b);
+        display = to_string(c) + " / " + to_string(b);
+    }
+    return display;
+}
+int getA() {
+    return a;
+}
+int getB() {
+    return b;
+}
 
 int main()
 {
@@ -62,25 +132,31 @@ int main()
 
 
 
-    Screen mathGame(false);                             
+    Screen mathGame(false);
+   // sf::RectangleShape mbackground(sf::Vector2f(1600, 1000));
     screens.push_back(&mathGame);                       
     sf::Texture mathBackground;                         
     mathBackground.loadFromFile("mathbackground.jpg");
     background.setTexture(&mathBackground);
     mathGame.thingsToDraw.emplace("background", background);                                    //math background
-    mathGame.thingsToDraw.emplace("backButton", sf::RectangleShape(sf::Vector2f(400, 100)));    // 
+    mathGame.thingsToDraw.emplace("backButton", sf::RectangleShape(sf::Vector2f(400, 100)));    //
     mathGame.thingsToDraw.emplace("mathDisplay", sf::RectangleShape(sf::Vector2f(400, 200)));
     mathGame.thingsToDraw.emplace("choiceOneMath", sf::RectangleShape(sf::Vector2f(400, 75)));
     mathGame.thingsToDraw.emplace("choiceTwoMath", sf::RectangleShape(sf::Vector2f(400, 75)));
-    mathGame.thingsToDraw.emplace("nextMath", sf::RectangleShape(sf::Vector2f(400, 75)));
+    mathGame.thingsToDraw.emplace("nextMath", sf::RectangleShape(sf::Vector2f(200, 75)));
     mathGame.thingsToDraw.find("backButton")->second.setPosition(50, 75);                     //back buttom on top left corner
     mathGame.thingsToDraw.find("mathDisplay")->second.setPosition(900, 300);  // where the equation will be
     mathGame.thingsToDraw.find("choiceOneMath")->second.setPosition(900, 550); // first option 
     mathGame.thingsToDraw.find("choiceTwoMath")->second.setPosition(900, 675); // second option
-    mathGame.thingsToDraw.find("nextMath")->second.setPosition(900, 800); // to go to next question
-
-
-
+    //mathGame.thingsToDraw.find("choiceThreeMath")->second.setPosition(900, 800); //thrid option
+    mathGame.thingsToDraw.find("nextMath")->second.setPosition(1300, 900); // to go to next question
+    mathGame.setText("Back", "backButton");
+    int count = 0;
+    int count1 = 0;
+    string display = "";
+    mathGame.setText("Click Start to start", "mathDisplay");
+    mathGame.setText("Start", "nextMath");
+    
     while (window.isOpen())
     {
         sf::Event event;
@@ -117,13 +193,113 @@ int main()
                     }
                     else if (mathGame.needToDraw) {
                         if (mathGame.thingsToDraw.find("choiceOneMath")->second.getGlobalBounds().contains(event.mouseButton.x, event.mouseButton.y)) { // click on first choice
-                            mathGame.thingsToDraw.find("choiceOneMath")->second.setFillColor(sf::Color::Blue);
+                            if (count1 == 1) {
+                                mathGame.thingsToDraw.find("choiceOneMath")->second.setFillColor(sf::Color::Green);
+                                mathGame.setText("CORRECT", "mathDisplay");
+                            }
+                            else {
+                                mathGame.thingsToDraw.find("choiceOneMath")->second.setFillColor(sf::Color::Red);
+                                mathGame.setText("INCORRECT", "mathDisplay");
+                            }
+
                         }
                         else if (mathGame.thingsToDraw.find("choiceTwoMath")->second.getGlobalBounds().contains(event.mouseButton.x, event.mouseButton.y)) { //click on second choice
-                            mathGame.thingsToDraw.find("choiceTwoMath")->second.setFillColor(sf::Color::Magenta);
+                            if (count1 == 2) {
+                                mathGame.thingsToDraw.find("choiceTwoMath")->second.setFillColor(sf::Color::Green);
+                                mathGame.setText("CORRECT", "mathDisplay");
+                            }
+                            else {
+                                mathGame.thingsToDraw.find("choiceTwoMath")->second.setFillColor(sf::Color::Red);
+                                mathGame.setText("INCORRECT", "mathDisplay");
+                            }
                         }
                         else if (mathGame.thingsToDraw.find("nextMath")->second.getGlobalBounds().contains(event.mouseButton.x, event.mouseButton.y)) { // click to next game
-                            mathGame.thingsToDraw.find("nextMath")->second.setFillColor(sf::Color::Green);
+                            mathGame.setText("Next", "nextMath");
+                            count = rand() % 3;
+                            count1 = rand() % 2 + 1;
+                            display = randomFunct(count);
+                            mathGame.setText(display, "mathDisplay");
+                            mathGame.thingsToDraw.find("choiceTwoMath")->second.setFillColor(sf::Color::White);
+                            mathGame.thingsToDraw.find("choiceOneMath")->second.setFillColor(sf::Color::White);
+                            int c = 0;
+                            int d = rand() % 20;
+                            int thisA = getA();
+                            int thisB = getB();
+
+                            if (count >= 4) {
+                                count = 0;
+                            }
+
+                            if (count1 > 2) {
+                                count1 = 0;
+                            }
+                            if (count == 0 && count1 == 1) {//add and correct choice 1
+                                c = add(thisA, thisB);
+                                while (d == c) {
+                                    d = rand() % 20;
+                                }
+                                mathGame.setText(to_string(c), "choiceOneMath");
+                                mathGame.setText(to_string(d), "choiceTwoMath");
+
+                            }
+                            else if (count == 1 && count1 == 1) {//subtract and correct choice 1
+                                c = subtract(thisA, thisB);
+                                while (d == c) {
+                                    d = rand() % 20;
+                                }
+                                mathGame.setText(to_string(c), "choiceOneMath");
+                                mathGame.setText(to_string(d), "choiceTwoMath");
+                            }
+                            else if (count == 2 && count1 == 1) {//multiply and correct choice 1
+                                c = multiply(thisA, thisB);
+                                while (d == c) {
+                                    d = rand() % 20;
+                                }
+                                mathGame.setText(to_string(c), "choiceOneMath");
+                                mathGame.setText(to_string(d), "choiceTwoMath");
+                            }
+                            else if (count == 3 && count1 == 1) {//divide and correct choice 1
+                                c = divide(thisA, thisB);
+                                while (d == c) {
+                                    d = rand() % 20;
+                                }
+                                mathGame.setText(to_string(c), "choiceOneMath");
+                                mathGame.setText(to_string(d), "choiceTwoMath");
+
+                            }
+                            else if (count == 0 && count1 == 2) {//add and correct choice 2
+                                c = add(thisA, thisB);
+                                while (d == c) {
+                                    d = rand() % 20;
+                                }
+                                mathGame.setText(to_string(c), "choiceTwoMath");
+                                mathGame.setText(to_string(d), "choiceOneMath");
+                            }
+                            else if (count == 1 && count1 == 2) {//subtract and correct choice 2
+                                c = subtract(thisA, thisB);
+                                while (d == c) {
+                                    d = rand() % 20;
+                                }
+                                mathGame.setText(to_string(c), "choiceTwoMath");
+                                mathGame.setText(to_string(d), "choiceOneMath");
+                            }
+                            else if (count == 2 && count1 == 2) {//multiply and correct choice 2
+                                c = multiply(thisA, thisB);
+                                while (d == c) {
+                                    d = rand() % 20;
+                                }
+                                mathGame.setText(to_string(c), "choiceTwoMath");
+                                mathGame.setText(to_string(d), "choiceOneMath");
+                            }
+                            else if (count == 3 && count1 == 2) {//divide and correct choice 2
+                                c = divide(thisA, thisB);
+                                while (d == c) {
+                                    d = rand() % 20;
+                                }
+                                mathGame.setText(to_string(c), "choiceTwoMath");
+                                mathGame.setText(to_string(d), "choiceOneMath");
+                            }
+                            
                         }
                         else if (mathGame.thingsToDraw.find("backButton")->second.getGlobalBounds().contains(event.mouseButton.x, event.mouseButton.y)) {//tests bounds of button and if the screen is currently visable
                             startMenu.needToDraw = true;
