@@ -109,7 +109,6 @@ int main(int argc, char** argv)
     string currentLineStringInput; //place holder if file is empty
     vector<int> wrongKeys; //used for turning red tints off
     ifstream inputFile("typingLines.txt");
-    
     vector<string> differentLines;
 
     string readInLine;
@@ -250,8 +249,11 @@ int main(int argc, char** argv)
                         }
                         else if(playMenu.thingsToDraw.find("GrammarGame_Button")->second.getGlobalBounds().contains(event.mouseButton.x, event.mouseButton.y))
                             playMenu.thingsToDraw.find("GrammarGame_Button")->second.setFillColor(sf::Color::Yellow);
-                        else if(playMenu.thingsToDraw.find("TypingGame_Button")->second.getGlobalBounds().contains(event.mouseButton.x, event.mouseButton.y))
-                            playMenu.thingsToDraw.find("TypingGame_Button")->second.setFillColor(sf::Color::Yellow);
+                        else if (playMenu.thingsToDraw.find("TypingGame_Button")->second.getGlobalBounds().contains(event.mouseButton.x, event.mouseButton.y)){
+                            playMenu.needToDraw = false;
+                            typingGame.needToDraw = true;
+                        }
+
                     }
                     else if (mathGame.needToDraw) {
                         if (mathGame.thingsToDraw.find("choiceOneMath")->second.getGlobalBounds().contains(event.mouseButton.x, event.mouseButton.y)) { // click on first choice
@@ -467,6 +469,7 @@ void turnLowerAndFix(string& input) { //turns string to lower case and gets rid 
         input.at(i) = tolower(input.at(i));
         if (acceptableChars.find(input.at(i)) == string::npos) {
             input.erase(i, 1);
+            i--;
         }
     }
 }
