@@ -94,7 +94,7 @@ int main(int argc, char** argv)
     sf::RectangleShape background(sf::Vector2f(1600, 1000)); //adds background
     sf::Texture fishtankBackground;                          //
 
-    fishtankBackground.loadFromFile("../testSWEProject/fishtank.jpg");         //sets up background
+    fishtankBackground.loadFromFile("fishtank.jpg");         //sets up background
     background.setTexture(&fishtankBackground);              //
 
 
@@ -145,7 +145,7 @@ int main(int argc, char** argv)
     Screen mathGame(false);
     screens.push_back(&mathGame);
     sf::Texture mathBackground;
-    mathBackground.loadFromFile("../testSWEProject/mathbackground.jpg");
+    mathBackground.loadFromFile("mathbackground.jpg");
     background.setTexture(&mathBackground);
     mathGame.thingsToDraw.emplace("background", background);                                    //math background
     mathGame.thingsToDraw.emplace("backButton", sf::RectangleShape(sf::Vector2f(400, 100)));    // 
@@ -171,7 +171,7 @@ int main(int argc, char** argv)
     screens.push_back(&grammarGame);
 
     sf::Texture gramBackground;
-    gramBackground.loadFromFile("../testSWEProject/grammarBackground.jpg");
+    gramBackground.loadFromFile("grammarBackground.jpg");
     background.setTexture(&gramBackground);
 
     int gramQNo = 0;
@@ -234,7 +234,7 @@ int main(int argc, char** argv)
     typingGame.thingsToDraw.emplace("background", tBackground);
     sf::RectangleShape testLetter(sf::Vector2f(100, 100)); //key shape
     sf::Texture font;
-    font.loadFromFile("../testSWEProject/src/image/font.png");
+    font.loadFromFile("src/image/font.png");
     testLetter.setTexture(&font);
     testLetter.setOutlineThickness(5);
     testLetter.setOutlineColor(sf::Color::Black);
